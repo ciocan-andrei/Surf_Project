@@ -32,7 +32,7 @@ const Map = ({ locations }) => {
         onViewportChange={(viewport) => {
           setViewport(viewport);
         }}
-        mapStyle="mapbox://styles/alpacanho27/ckmwah5vb1bf617sagvhd0uhm"
+        mapStyle="mapbox://styles/mapbox/outdoors-v11"
       >
         {locations.map((location) => {
           const { id, lat, long } = location;
@@ -43,12 +43,13 @@ const Map = ({ locations }) => {
               longitude={parseFloat(long)}
             >
               <button
+                className="map-marker"
                 onClick={(e) => {
                   e.preventDefault();
                   setSelectedLocation(location);
                 }}
               >
-                TEST
+                <img src="/surferLogo.svg" alt="Surfer Icon" />
               </button>
             </Marker>
           );

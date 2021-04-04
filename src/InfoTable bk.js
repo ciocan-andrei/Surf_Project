@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import Paper from "@material-ui/core/Paper";
 import Table from "@material-ui/core/Table";
@@ -8,46 +8,30 @@ import TableContainer from "@material-ui/core/TableContainer";
 import TableHead from "@material-ui/core/TableHead";
 import TablePagination from "@material-ui/core/TablePagination";
 import TableRow from "@material-ui/core/TableRow";
-import TableSortLabel from "@material-ui/core/TableSortLabel";
 
 const columns = [
-  {
-    id: "name",
-    label: "Name",
-    //  minWidth: 100,
-    align: "left",
-  },
+  { id: "name", label: "Name", minWidth: 100, align: "left" },
   {
     id: "latitude",
     label: "Latitude",
-    // minWidth: 80,
-    align: "left",
+    minWidth: 80,
+    align: "right",
   },
   {
     id: "longitude",
     label: "Longitude",
-    // minWidth: 80,
-    align: "left",
+    minWidth: 80,
+    align: "right",
   },
-  {
-    id: "country",
-    label: "Country",
-    //  minWidth: 170,
-    align: "left",
-  },
+  { id: "country", label: "Country", minWidth: 170, align: "center" },
   {
     id: "probability",
     label: "Wind Probability",
-    // minWidth: 150,
+    minWidth: 150,
     format: (value) => value + "%",
-    align: "left",
+    align: "right",
   },
-  {
-    id: "month",
-    label: "Season",
-    //  minWidth: 170,
-    align: "left",
-  },
+  { id: "month", label: "Season", minWidth: 170, align: "center" },
 ];
 
 const useStyles = makeStyles({
@@ -55,60 +39,17 @@ const useStyles = makeStyles({
     width: "100%",
   },
   container: {
-    height: 600,
+    maxHeight: 440,
   },
 });
-
-function descendingComparator(a, b, orderBy) {
-  if (b[orderBy] < a[orderBy]) {
-    return -1;
-  }
-  if (b[orderBy] > a[orderBy]) {
-    return 1;
-  }
-  return 0;
-}
-
-function getComparator(order, orderBy) {
-  return order === "desc"
-    ? (a, b) => descendingComparator(a, b, orderBy)
-    : (a, b) => -descendingComparator(a, b, orderBy);
-}
-
-function stableSort(array, comparator) {
-  const stabilizedThis = array.map((el, index) => [el, index]);
-  stabilizedThis.sort((a, b) => {
-    const order = comparator(a[0], b[0]);
-    if (order !== 0) return order;
-    return a[1] - b[1];
-  });
-  return stabilizedThis.map((el) => el[0]);
-}
 
 const InfoTable = ({ locations }) => {
   const classes = useStyles();
   const [page, setPage] = useState(0);
-  const [rowsPerPage, setRowsPerPage] = useState(20);
+  const [rowsPerPage, setRowsPerPage] = useState(10);
   const [filterByCountry, setFilterByCountry] = useState("");
   const [filterByWindProbability, setfilterByWindProbability] = useState("");
-  const [order, setOrder] = React.useState("asc");
-  const [orderBy, setOrderBy] = React.useState("calories");
-  const [selected, setSelected] = React.useState([]);
-
-  useEffect(() => {
-    setPage(0);
-  }, [filterByCountry, filterByWindProbability]);
-
-  const createSortHandler = (property) => (event) => {
-    handleRequestSort(event, property);
-  };
-
-  const handleRequestSort = (event, property) => {
-    const isAsc = orderBy === property && order === "asc";
-    setOrder(isAsc ? "desc" : "asc");
-    setOrderBy(property);
-    setPage(0);
-  };
+  const [rowsCounter, setRowsCounter] = useState(locations.length);
 
   const reorderData = (
     name,
@@ -122,7 +63,7 @@ const InfoTable = ({ locations }) => {
   };
 
   const filterRows = (rows) => {
-    return rows
+    const newRows = rows
       .filter(
         (row) =>
           row.name.toLowerCase().indexOf(filterByCountry.toLowerCase()) > -1
@@ -130,6 +71,9 @@ const InfoTable = ({ locations }) => {
       .filter((row) =>
         row.probability.toString().startsWith(filterByWindProbability)
       );
+
+    // setRowsCounter(newRows.length);
+    return newRows;
   };
 
   const rows = locations.map((location) => {
@@ -166,7 +110,6 @@ const InfoTable = ({ locations }) => {
         onChange={(e) => setfilterByWindProbability(e.target.value)}
         placeholder="Wind probability"
       />
-
       <TableContainer className={classes.container}>
         <Table stickyHeader aria-label="sticky table">
           <TableHead>
@@ -175,34 +118,15 @@ const InfoTable = ({ locations }) => {
                 <TableCell
                   key={column.id}
                   align={column.align}
-                  style={{
-                    // minWidth: column.minWidth,
-                    width: "16.6%",
-                    padding: "0.5rem 0.3rem",
-                  }}
-                  sortDirection={orderBy === column.id ? order : false}
+                  style={{ minWidth: column.minWidth }}
                 >
-                  <TableSortLabel
-                    active={orderBy === column.id}
-                    direction={orderBy === column.id ? order : "asc"}
-                    onClick={createSortHandler(column.id)}
-                  >
-                    {column.label}
-                    {orderBy === column.id ? (
-                      <span className={classes.visuallyHidden}>
-                        {/* {order === "desc"
-                          ? "sorted descending"
-                          : "sorted asceding"} */}
-                      </span>
-                    ) : null}
-                  </TableSortLabel>
+                  {column.label}
                 </TableCell>
               ))}
             </TableRow>
           </TableHead>
-
           <TableBody>
-            {stableSort(filterRows(rows), getComparator(order, orderBy))
+            {filterRows(rows)
               .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
               .map((row) => {
                 return (
@@ -233,7 +157,7 @@ const InfoTable = ({ locations }) => {
         </Table>
       </TableContainer>
       <TablePagination
-        rowsPerPageOptions={[25]}
+        rowsPerPageOptions={[10]}
         component="div"
         count={rows.length}
         rowsPerPage={rowsPerPage}
