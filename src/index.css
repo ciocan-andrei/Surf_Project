@@ -16,10 +16,6 @@ body {
   color: #bdbdbd;
 }
 
-.MuiTablePagination-actions {
-  /* color: #bdbdbd; */
-}
-
 .nav {
   display: flex;
   list-style: none;
