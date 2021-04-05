@@ -1,8 +1,71 @@
+:root {
+  --transition: all 0.3s linear;
+  --spacing: 0.1rem;
+  --radius: 0.3rem;
+  --light-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+  --dark-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+  --max-width: 1170px;
+  --fixed-width: 620px;
+}
+
 body {
   margin: 0;
   font-family: "Roboto";
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  background: rgb(255, 255, 255);
+  background: linear-gradient(
+    45deg,
+    rgba(255, 255, 255, 1) 0%,
+    rgba(221, 177, 211, 0.4374124649859944) 50%,
+    rgba(0, 212, 255, 0.4654236694677871) 100%
+  );
+}
+
+.bg-color {
+  background: rgb(255, 255, 255);
+  background: linear-gradient(
+    45deg,
+    rgba(255, 255, 255, 1) 0%,
+    rgba(221, 177, 211, 0.2) 50%,
+    rgba(0, 213, 255, 0.2) 100%
+  );
+}
+
+.menu {
+  padding: 2rem 0;
+}
+
+/* section */
+.section {
+  width: 90vw;
+  margin: 0 auto;
+  max-width: var(--max-width);
+}
+
+@media screen and (min-width: 992px) {
+  .section {
+    width: 95vw;
+  }
+}
+
+.dashboard-item {
+  background: var(#fff);
+  /* border-radius: var(--radius); */
+  margin: 2rem 0;
+  box-shadow: var(--light-shadow);
+  transition: var(--transition);
+}
+.dashboard-item:hover {
+  box-shadow: var(--dark-shadow);
+}
+
+.map {
+  border-radius: var(--radius) var(--radius) 0 0;
+}
+
+.table {
+  border-radius: 0 0 var(--radius) var(--radius);
 }
 
 .container {

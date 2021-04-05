@@ -1,13 +1,13 @@
 import { useState, useEffect } from "react";
 import ReactMapGL, { Marker, Popup } from "react-map-gl";
 
-const Map = ({ locations }) => {
+const Map = ({ locations, loggedUser }) => {
   const [viewport, setViewport] = useState({
     latitude: 44.41248,
     longitude: 26.105038,
     zoom: 3,
   });
-
+  console.log(loggedUser);
   const [selectedLocation, setSelectedLocation] = useState(null);
 
   useEffect(() => {
@@ -23,7 +23,7 @@ const Map = ({ locations }) => {
   }, []);
 
   return (
-    <div className="container">
+    <div className="container dashboard-item">
       <ReactMapGL
         {...viewport}
         width="100%"
@@ -33,6 +33,7 @@ const Map = ({ locations }) => {
           setViewport(viewport);
         }}
         mapStyle="mapbox://styles/mapbox/outdoors-v11"
+        className="map"
       >
         {locations.map((location) => {
           const { id, lat, long } = location;

@@ -9,12 +9,13 @@ import TableHead from "@material-ui/core/TableHead";
 import TablePagination from "@material-ui/core/TablePagination";
 import TableRow from "@material-ui/core/TableRow";
 import TableSortLabel from "@material-ui/core/TableSortLabel";
+import { lightBlue } from "@material-ui/core/colors";
 
 const columns = [
   {
     id: "name",
     label: "Name",
-    //  minWidth: 100,
+    // minWidth: 100,
     align: "left",
   },
   {
@@ -153,7 +154,7 @@ const InfoTable = ({ locations }) => {
   };
 
   return (
-    <Paper className={classes.root}>
+    <Paper className={`${classes.root} bg-color`}>
       <input
         type="text"
         style={{ margin: "0.5rem" }}
@@ -177,8 +178,9 @@ const InfoTable = ({ locations }) => {
                   align={column.align}
                   style={{
                     // minWidth: column.minWidth,
-                    width: "16.6%",
+                    // width: "16.6%",
                     padding: "0.5rem 0.3rem",
+                    backgroundColor: "#EAF2F9",
                   }}
                   sortDirection={orderBy === column.id ? order : false}
                 >
@@ -240,7 +242,6 @@ const InfoTable = ({ locations }) => {
         page={page}
         onChangePage={handleChangePage}
         onChangeRowsPerPage={handleChangeRowsPerPage}
-        // className={rowsCounter <= 10 && "isFiltered"}
       />
     </Paper>
   );

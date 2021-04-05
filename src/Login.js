@@ -31,14 +31,14 @@ const Login = () => {
       localStorage.getItem("user") === undefined ||
       localStorage.getItem("user") === null
     ) {
-      return true;
+      return false;
     }
-    return false;
+    return true;
   };
 
   return (
     <div>
-      {checkForAuthUser() ? (
+      {!checkForAuthUser() ? (
         <form action="">
           <input type="text" placeholder="Email" ref={refEmail} />
           <input type="password" placeholder="Password" />
