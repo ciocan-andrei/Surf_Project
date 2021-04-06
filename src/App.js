@@ -2,7 +2,7 @@ import RouterSetup from "./RouterSetup";
 
 function App() {
   return (
-    <div className="App">
+    <div style={{ height: "100%" }}>
       <RouterSetup />
     </div>
   );

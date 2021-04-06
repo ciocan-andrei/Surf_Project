@@ -9,18 +9,20 @@ import Login from "./Login";
 const RouterSetup = () => {
   return (
     <Router>
-      <Navbar />
       <Switch>
         <Route exact path="/">
           <Home />
         </Route>
         <Route path="/login">
+          <Navbar />
           <Login />
         </Route>
         <Route path="/dashboard">
+          <Navbar />
           <Dashboard />
         </Route>
         <Route path="*">
+          <Navbar />
           <ErrorPage />
         </Route>
       </Switch>

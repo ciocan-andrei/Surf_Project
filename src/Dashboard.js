@@ -12,9 +12,11 @@ const Dashboard = () => {
   const loggedUser = useFetch(`${usersUrl}/${userId ? userId : ""}`);
 
   return (
-    <div className="menu section">
-      <Map locations={locations} loggedUser={loggedUser} />
-      <InfoTable locations={locations} loggedUser={loggedUser} />
+    <div className="bg-color">
+      <main className="section">
+        <Map locations={locations} loggedUser={loggedUser} />
+        <InfoTable locations={locations} loggedUser={loggedUser} />
+      </main>
     </div>
   );
 };

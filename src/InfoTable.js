@@ -15,7 +15,7 @@ const columns = [
   {
     id: "name",
     label: "Name",
-    // minWidth: 100,
+    minWidth: 150,
     align: "left",
   },
   {
@@ -33,7 +33,7 @@ const columns = [
   {
     id: "country",
     label: "Country",
-    //  minWidth: 170,
+    minWidth: 150,
     align: "left",
   },
   {
@@ -154,7 +154,7 @@ const InfoTable = ({ locations }) => {
   };
 
   return (
-    <Paper className={`${classes.root} bg-color`}>
+    <Paper className={`${classes.root} table-container`}>
       <input
         type="text"
         style={{ margin: "0.5rem" }}
@@ -168,7 +168,7 @@ const InfoTable = ({ locations }) => {
         placeholder="Wind probability"
       />
 
-      <TableContainer className={classes.container}>
+      <TableContainer className={`${classes.container} table-container`}>
         <Table stickyHeader aria-label="sticky table">
           <TableHead>
             <TableRow>
@@ -177,7 +177,7 @@ const InfoTable = ({ locations }) => {
                   key={column.id}
                   align={column.align}
                   style={{
-                    // minWidth: column.minWidth,
+                    minWidth: column.minWidth,
                     // width: "16.6%",
                     padding: "0.5rem 0.3rem",
                     backgroundColor: "#EAF2F9",
