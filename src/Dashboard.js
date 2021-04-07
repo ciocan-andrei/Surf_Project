@@ -8,14 +8,12 @@ const usersUrl = "https://606216fdac47190017a7267c.mockapi.io/user";
 
 const Dashboard = () => {
   const locations = useFetch(spotsUrl);
-  const userId = localStorage.getItem("user");
-  const loggedUser = useFetch(`${usersUrl}/${userId ? userId : ""}`);
 
   return (
     <div className="bg-color">
       <main className="section">
-        <Map locations={locations} loggedUser={loggedUser} />
-        <InfoTable locations={locations} loggedUser={loggedUser} />
+        <Map locations={locations} />
+        <InfoTable locations={locations} />
       </main>
     </div>
   );

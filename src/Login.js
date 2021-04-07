@@ -11,12 +11,8 @@ const Login = () => {
     // e.preventDefault();
     const email = refEmail.current.value;
     for (let user of users) {
-      if (user.email === email) localStorage.setItem("user", user.id);
-    }
-    if (localStorage.getItem("user")) {
-      //   console.log(localStorage.getItem("user"));
-    } else {
-      //   console.log("user inexistent");
+      if (user.email === email)
+        localStorage.setItem("user", JSON.stringify(user));
     }
   };
 

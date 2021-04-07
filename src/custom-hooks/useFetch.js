@@ -5,9 +5,19 @@ export const useFetch = (url) => {
   const [items, setItems] = useState([]);
 
   const getItems = async () => {
-    const res = await fetch(url);
-    const items = await res.json();
-    setItems(items);
+    const controller = new AbortController();
+    try {
+      const res = await fetch(url, { signal: controller.signal });
+      if (res.ok) {
+        const items = await res.json();
+        return setItems(items);
+      } else {
+        throw new Error(`Request failed. Status: ${res.status}`);
+      }
+    } catch (e) {
+      console.log(e.message);
+      return setItems(null);
+    }
     // setLoading(false);
   };
 

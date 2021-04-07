@@ -7,7 +7,7 @@ const Map = ({ locations, loggedUser }) => {
     longitude: 26.105038,
     zoom: 3,
   });
-  console.log(loggedUser);
+
   const [selectedLocation, setSelectedLocation] = useState(null);
 
   useEffect(() => {

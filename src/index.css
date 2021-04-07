@@ -41,6 +41,7 @@ header .logo {
   background-size: 30px;
   background-position: center;
   cursor: pointer;
+  transition: 0.5s ease;
 }
 .toggle.active {
   background: url(https://i.ibb.co/rt3HybH/close.png);
