@@ -181,7 +181,7 @@ header .logo {
 .bg-color {
   background: linear-gradient(
     45deg,
-    rgba(36, 93, 248, 0.63) 0%,
+    rgba(204, 211, 250, 0.63) 0%,
     rgba(255, 255, 255, 0.74) 50%,
     #75cff0 100%
   );
@@ -257,4 +257,42 @@ header .logo {
 .table-container {
   background-color: rgba(82, 204, 252, 0.349);
   opacity: 0.8;
+}
+
+.table-row:nth-of-type(odd) {
+  background-color: #daedf8;
+}
+
+.add-fav {
+  display: block;
+  width: 200px;
+  margin: 1rem auto 0 auto;
+  color: rgb(23, 150, 19);
+  letter-spacing: var(--spacing);
+  background: transparent;
+  border: 1px solid rgb(23, 150, 19);
+  padding: 0.25rem 0.5rem;
+  border-radius: var(--radius);
+  box-shadow: var(--light-shadow);
+  transition: var(--transition);
+}
+
+.rm-fav {
+  display: block;
+  width: 200px;
+  margin: 1rem auto 0 auto;
+  color: rgb(104, 9, 9);
+  letter-spacing: var(--spacing);
+  background: transparent;
+  border: 1px solid rgb(104, 9, 9);
+  padding: 0.25rem 0.5rem;
+  border-radius: var(--radius);
+  box-shadow: var(--light-shadow);
+  transition: var(--transition);
+}
+
+.add-fav:hover,
+.rm-fav:hover {
+  box-shadow: var(--dark-shadow);
+  cursor: pointer;
 }

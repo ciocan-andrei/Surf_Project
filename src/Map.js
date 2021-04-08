@@ -1,13 +1,23 @@
 import { useState, useEffect } from "react";
 import ReactMapGL, { Marker, Popup } from "react-map-gl";
+import { useFetch } from "./custom-hooks/useFetch";
 
-const Map = ({ locations, loggedUser }) => {
+const favsUrl = "https://606216fdac47190017a7267c.mockapi.io/favourites";
+
+const Map = ({ locations }) => {
   const [viewport, setViewport] = useState({
     latitude: 44.41248,
     longitude: 26.105038,
     zoom: 3,
   });
 
+  let userId = null;
+  if (localStorage.getItem("user")) {
+    const loggedUser = JSON.parse(localStorage.getItem("user"));
+    userId = loggedUser.id;
+  }
+
+  const favSpot = useFetch(`${favsUrl}/${userId}`);
   const [selectedLocation, setSelectedLocation] = useState(null);
 
   useEffect(() => {
@@ -21,6 +31,14 @@ const Map = ({ locations, loggedUser }) => {
       window.removeEventListener("keydown", listener);
     };
   }, []);
+
+  const removeFav = () => {
+    //delete req /w id
+  };
+
+  const saveFav = () => {
+    //post request de add
+  };
 
   return (
     <div className="container dashboard-item">
@@ -50,7 +68,11 @@ const Map = ({ locations, loggedUser }) => {
                   setSelectedLocation(location);
                 }}
               >
-                <img src="/surferLogo.svg" alt="Surfer Icon" />
+                {favSpot && favSpot.spot === id ? (
+                  <img src="/goldSurferLogo.png" alt="Favourite Spot Icon" />
+                ) : (
+                  <img src="/surferLogo.png" alt="Surfer Icon" />
+                )}
               </button>
             </Marker>
           );
@@ -66,6 +88,15 @@ const Map = ({ locations, loggedUser }) => {
               <h2>{selectedLocation.name}</h2>
               <p>{selectedLocation.country}</p>
               <p>Wind probability {selectedLocation.probability}</p>
+              {favSpot && favSpot.spot === selectedLocation.id ? (
+                <button className="rm-fav" onClick={removeFav}>
+                  Remove favourite
+                </button>
+              ) : (
+                <button className="add-fav" onClick={saveFav}>
+                  Save as favourite
+                </button>
+              )}
             </div>
           </Popup>
         )}

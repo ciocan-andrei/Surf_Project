@@ -19,6 +19,12 @@ const columns = [
     align: "left",
   },
   {
+    id: "country",
+    label: "Country",
+    minWidth: 120,
+    align: "left",
+  },
+  {
     id: "latitude",
     label: "Latitude",
     // minWidth: 80,
@@ -30,22 +36,17 @@ const columns = [
     // minWidth: 80,
     align: "left",
   },
-  {
-    id: "country",
-    label: "Country",
-    minWidth: 150,
-    align: "left",
-  },
+
   {
     id: "probability",
-    label: "Wind Probability",
+    label: "Wind Prob.",
     // minWidth: 150,
     format: (value) => value + "%",
     align: "left",
   },
   {
     id: "month",
-    label: "Season",
+    label: "When to go",
     //  minWidth: 170,
     align: "left",
   },
@@ -119,7 +120,7 @@ const InfoTable = ({ locations }) => {
     probability,
     month
   ) => {
-    return { name, latitude, longitude, country, probability, month };
+    return { name, country, latitude, longitude, probability, month };
   };
 
   const filterRows = (rows) => {
@@ -154,7 +155,7 @@ const InfoTable = ({ locations }) => {
   };
 
   return (
-    <Paper className={`${classes.root} table-container`}>
+    <Paper className={`${classes.root} table-container dashboard-item`}>
       <input
         type="text"
         style={{ margin: "0.5rem" }}
@@ -213,6 +214,7 @@ const InfoTable = ({ locations }) => {
                     role="checkbox"
                     tabIndex={-1}
                     key={row.latitude.concat(row.longitude)}
+                    className="table-row"
                   >
                     {columns.map((column) => {
                       const value = row[column.id];
