@@ -9,7 +9,7 @@ import TableHead from "@material-ui/core/TableHead";
 import TablePagination from "@material-ui/core/TablePagination";
 import TableRow from "@material-ui/core/TableRow";
 import TableSortLabel from "@material-ui/core/TableSortLabel";
-import { lightBlue } from "@material-ui/core/colors";
+import { BsSearch } from "react-icons/bs";
 
 const columns = [
   {
@@ -87,12 +87,11 @@ function stableSort(array, comparator) {
   return stabilizedThis.map((el) => el[0]);
 }
 
-const InfoTable = ({ locations }) => {
+const InfoTable = ({ locations, filterLocations }) => {
   const classes = useStyles();
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(20);
   const [filterTable, setFilterTable] = useState("");
-  // const [filterByWindProbability, setfilterByWindProbability] = useState("");
   const [order, setOrder] = React.useState("asc");
   const [orderBy, setOrderBy] = React.useState("calories");
   const [selected, setSelected] = React.useState([]);
@@ -123,16 +122,20 @@ const InfoTable = ({ locations }) => {
     return { name, country, latitude, longitude, probability, month };
   };
 
-  const filterRows = (rows) => {
-    // return rows
-    //   .filter(
-    //     (row) =>
-    //       row.name.toLowerCase().indexOf(filterByCountry.toLowerCase()) > -1
-    //   )
-    //   .filter((row) =>
-    //     row.probability.toString().startsWith(filterByWindProbability)
-    //   );
-  };
+  function filterLocations(rows) {
+    return rows.filter((location) => {
+      return (
+        location.country
+          .toLowerCase()
+          .indexOf(filterTable.toLowerCase().trim()) > -1 ||
+        location.name.toLowerCase().indexOf(filterTable.toLowerCase().trim()) >
+          -1 ||
+        location.month.toLowerCase().indexOf(filterTable.toLowerCase().trim()) >
+          -1 ||
+        location.probability.toString().startsWith(filterTable.trim())
+      );
+    });
+  }
 
   const rows = locations.map((location) => {
     return reorderData(
@@ -156,12 +159,15 @@ const InfoTable = ({ locations }) => {
 
   return (
     <Paper className={`${classes.root} table-container dashboard-item`}>
-      <input
-        type="text"
-        style={{ margin: "0.5rem" }}
-        onChange={(e) => setFilterTable(e.target.value)}
-        placeholder="Search"
-      />
+      <div className="search-table-box">
+        <BsSearch />
+        <input
+          type="text"
+          onChange={(e) => setFilterTable(e.target.value)}
+          placeholder="Search"
+          className="search-table"
+        />
+      </div>
 
       <TableContainer className={`${classes.container} table-container`}>
         <Table stickyHeader aria-label="sticky table">
@@ -199,7 +205,7 @@ const InfoTable = ({ locations }) => {
           </TableHead>
 
           <TableBody>
-            {stableSort(rows, getComparator(order, orderBy))
+            {stableSort(filterLocations(rows), getComparator(order, orderBy))
               .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
               .map((row) => {
                 return (

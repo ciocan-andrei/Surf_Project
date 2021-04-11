@@ -6,7 +6,7 @@ import { BsFilter } from "react-icons/bs";
 
 const favsUrl = "https://606216fdac47190017a7267c.mockapi.io/favourites";
 
-const Map = ({ locations, filterLocations, resetLocations }) => {
+const Map = ({ locations, filterLocations }) => {
   const {
     isMapFilterOpen,
     toggleMapFilter,
@@ -30,7 +30,7 @@ const Map = ({ locations, filterLocations, resetLocations }) => {
     userId = loggedUser.id;
   }
 
-  const favSpot = useFetch(`${favsUrl}/${userId}`);
+  let favSpot = useFetch(`${favsUrl}/${userId}`);
   const [selectedLocation, setSelectedLocation] = useState(null);
 
   useEffect(() => {
@@ -57,8 +57,7 @@ const Map = ({ locations, filterLocations, resetLocations }) => {
     }
     if (
       countryFilterRef.current.value.trim() === "" &&
-      probFilterRef.current.value.trim() === "" &&
-      showResetFilterBtn
+      probFilterRef.current.value.trim() === ""
     ) {
       closeResetFilterBtn();
       countryFilterRef.current.value = "";
@@ -74,12 +73,38 @@ const Map = ({ locations, filterLocations, resetLocations }) => {
     closeResetFilterBtn();
   };
 
-  const removeFav = () => {
-    //delete req /w id
+  const removeFav = async () => {
+    try {
+      const res = await fetch(`${favsUrl}/${userId}`, { method: "DELETE" });
+      const data = await res.json();
+      setSelectedLocation(null);
+      window.location.reload();
+      return data;
+    } catch (e) {
+      console.log(e);
+    }
   };
 
-  const saveFav = () => {
-    //post request de add
+  const saveFav = async (spotId) => {
+    try {
+      const res = await fetch(favsUrl, {
+        method: "POST",
+        headers: {
+          "Content-Type": "applicaton/json",
+        },
+        body: JSON.stringify({
+          id: userId,
+          createdAt: new Date().toLocaleString(),
+          spot: spotId,
+        }),
+      });
+      const data = await res.json();
+      setSelectedLocation(null);
+      window.location.reload();
+      return data;
+    } catch (e) {
+      console.log(e);
+    }
   };
 
   return (
@@ -95,7 +120,6 @@ const Map = ({ locations, filterLocations, resetLocations }) => {
         doubleClickZoom={false}
         dragRotate={false}
         onDblClick={(e) => {
-          e.preventDefault();
           console.log(e.lngLat);
         }}
         onClick={() => setSelectedLocation(null)}
@@ -169,17 +193,30 @@ const Map = ({ locations, filterLocations, resetLocations }) => {
             latitude={parseFloat(selectedLocation.lat)}
             longitude={parseFloat(selectedLocation.long)}
             onClose={() => setSelectedLocation(null)}
+            closeOnClick={false}
           >
-            <div>
+            <div className="map-popup">
               <h2>{selectedLocation.name}</h2>
               <p>{selectedLocation.country}</p>
               <p>Wind probability {selectedLocation.probability}</p>
               {favSpot && favSpot.spot === selectedLocation.id ? (
-                <button className="rm-fav" onClick={removeFav}>
+                <button
+                  className="rm-fav"
+                  onClick={() => {
+                    removeFav();
+                    setViewport(viewport);
+                  }}
+                >
                   Remove favourite
                 </button>
               ) : (
-                <button className="add-fav" onClick={saveFav}>
+                <button
+                  className="add-fav"
+                  onClick={() => {
+                    saveFav(selectedLocation.id);
+                    // setViewport(viewport);
+                  }}
+                >
                   Save as favourite
                 </button>
               )}
