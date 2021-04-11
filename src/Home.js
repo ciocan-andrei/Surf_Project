@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
+import { IoClose, IoMenu } from "react-icons/io5";
 
 const Home = () => {
   const [sideMenuToggle, setSideMenuToggle] = useState(false);
@@ -12,10 +13,13 @@ const Home = () => {
       <section className={`front-page ${sideMenuToggle ? "active" : ""}`}>
         <header>
           <h2 className="logo">Kite</h2>
-          <div
-            className={`toggle ${sideMenuToggle ? "active" : ""}`}
-            onClick={handleToggle}
-          ></div>
+          <div className="toggle" onClick={handleToggle}>
+            {sideMenuToggle ? (
+              <IoClose className="home-btn" />
+            ) : (
+              <IoMenu className="home-btn" />
+            )}
+          </div>
         </header>
         <video src="seasurfer.mp4" type="video/mp4" autoPlay loop muted></video>
         <div className="overlay"></div>

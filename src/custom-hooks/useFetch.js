@@ -5,9 +5,8 @@ export const useFetch = (url) => {
   const [items, setItems] = useState([]);
 
   const getItems = async () => {
-    const controller = new AbortController();
     try {
-      const res = await fetch(url, { signal: controller.signal });
+      const res = await fetch(url);
       if (res.ok) {
         const items = await res.json();
         return setItems(items);

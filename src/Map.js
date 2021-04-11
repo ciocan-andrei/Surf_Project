@@ -1,10 +1,23 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import ReactMapGL, { Marker, Popup } from "react-map-gl";
+import { useGlobalContext } from "./context";
 import { useFetch } from "./custom-hooks/useFetch";
+import { BsFilter } from "react-icons/bs";
 
 const favsUrl = "https://606216fdac47190017a7267c.mockapi.io/favourites";
 
-const Map = ({ locations }) => {
+const Map = ({ locations, filterLocations, resetLocations }) => {
+  const {
+    isMapFilterOpen,
+    toggleMapFilter,
+    showResetFilterBtn,
+    openResetFilterBtn,
+    closeResetFilterBtn,
+  } = useGlobalContext();
+
+  const countryFilterRef = useRef(null);
+  const probFilterRef = useRef(null);
+
   const [viewport, setViewport] = useState({
     latitude: 44.41248,
     longitude: 26.105038,
@@ -32,6 +45,35 @@ const Map = ({ locations }) => {
     };
   }, []);
 
+  const applyFilter = (e) => {
+    e.preventDefault();
+    toggleMapFilter();
+    filterLocations(
+      countryFilterRef.current.value.trim(),
+      probFilterRef.current.value.trim()
+    );
+    if (countryFilterRef.current.value || probFilterRef.current.value) {
+      openResetFilterBtn();
+    }
+    if (
+      countryFilterRef.current.value.trim() === "" &&
+      probFilterRef.current.value.trim() === "" &&
+      showResetFilterBtn
+    ) {
+      closeResetFilterBtn();
+      countryFilterRef.current.value = "";
+      probFilterRef.current.value = "";
+    }
+  };
+  const resetFilter = (e) => {
+    e.preventDefault();
+    toggleMapFilter();
+    filterLocations("", "");
+    countryFilterRef.current.value = "";
+    probFilterRef.current.value = "";
+    closeResetFilterBtn();
+  };
+
   const removeFav = () => {
     //delete req /w id
   };
@@ -50,9 +92,53 @@ const Map = ({ locations }) => {
         onViewportChange={(viewport) => {
           setViewport(viewport);
         }}
+        doubleClickZoom={false}
+        dragRotate={false}
+        onDblClick={(e) => {
+          e.preventDefault();
+          console.log(e.lngLat);
+        }}
+        onClick={() => setSelectedLocation(null)}
         mapStyle="mapbox://styles/mapbox/outdoors-v11"
         className="map"
       >
+        <button className="filter-btn" onClick={toggleMapFilter}>
+          FILTERS <BsFilter />
+        </button>
+        <div
+          className={`filter-box-container ${
+            isMapFilterOpen && "make-visible"
+          }`}
+        >
+          <form className="filter-box" action="">
+            <input
+              className="filter-input"
+              type="text"
+              placeholder="Country"
+              ref={countryFilterRef}
+            />
+            <input
+              className="filter-input"
+              type="text"
+              placeholder="Wind prob."
+              ref={probFilterRef}
+            />
+            <button className="filter-input-btn" onClick={applyFilter}>
+              APPLY FILTER
+            </button>
+            <button
+              className={`filter-reset-btn ${
+                showResetFilterBtn && "filter-reset-btn-show"
+              }`}
+              onClick={
+                // () => resetLocations
+                resetFilter
+              }
+            >
+              RESET FILTER
+            </button>
+          </form>
+        </div>
         {locations.map((location) => {
           const { id, lat, long } = location;
           return (

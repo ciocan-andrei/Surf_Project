@@ -91,15 +91,15 @@ const InfoTable = ({ locations }) => {
   const classes = useStyles();
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(20);
-  const [filterByCountry, setFilterByCountry] = useState("");
-  const [filterByWindProbability, setfilterByWindProbability] = useState("");
+  const [filterTable, setFilterTable] = useState("");
+  // const [filterByWindProbability, setfilterByWindProbability] = useState("");
   const [order, setOrder] = React.useState("asc");
   const [orderBy, setOrderBy] = React.useState("calories");
   const [selected, setSelected] = React.useState([]);
 
   useEffect(() => {
     setPage(0);
-  }, [filterByCountry, filterByWindProbability]);
+  }, [filterTable]);
 
   const createSortHandler = (property) => (event) => {
     handleRequestSort(event, property);
@@ -124,14 +124,14 @@ const InfoTable = ({ locations }) => {
   };
 
   const filterRows = (rows) => {
-    return rows
-      .filter(
-        (row) =>
-          row.name.toLowerCase().indexOf(filterByCountry.toLowerCase()) > -1
-      )
-      .filter((row) =>
-        row.probability.toString().startsWith(filterByWindProbability)
-      );
+    // return rows
+    //   .filter(
+    //     (row) =>
+    //       row.name.toLowerCase().indexOf(filterByCountry.toLowerCase()) > -1
+    //   )
+    //   .filter((row) =>
+    //     row.probability.toString().startsWith(filterByWindProbability)
+    //   );
   };
 
   const rows = locations.map((location) => {
@@ -159,14 +159,8 @@ const InfoTable = ({ locations }) => {
       <input
         type="text"
         style={{ margin: "0.5rem" }}
-        onChange={(e) => setFilterByCountry(e.target.value)}
-        placeholder="Country"
-      />
-      <input
-        type="text"
-        style={{ margin: "0.5rem" }}
-        onChange={(e) => setfilterByWindProbability(e.target.value)}
-        placeholder="Wind probability"
+        onChange={(e) => setFilterTable(e.target.value)}
+        placeholder="Search"
       />
 
       <TableContainer className={`${classes.container} table-container`}>
@@ -205,7 +199,7 @@ const InfoTable = ({ locations }) => {
           </TableHead>
 
           <TableBody>
-            {stableSort(filterRows(rows), getComparator(order, orderBy))
+            {stableSort(rows, getComparator(order, orderBy))
               .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
               .map((row) => {
                 return (

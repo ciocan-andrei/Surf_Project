@@ -8,7 +8,7 @@
   --fixed-width: 620px;
 }
 
-/* LOGIN */
+/* HOMEPAGE */
 * {
   margin: 0;
   padding: 0;
@@ -33,22 +33,19 @@ header .logo {
   cursor: pointer;
 }
 .toggle {
+  display: flex;
+  justify-content: center;
+  align-items: center;
   position: relative;
-  width: 60px;
-  height: 60px;
-  background: url(https://i.ibb.co/HrfVRcx/menu.png);
-  background-repeat: no-repeat;
-  background-size: 30px;
-  background-position: center;
+  width: 50px;
+  height: 50px;
+  /* border: none; */
   cursor: pointer;
-  transition: 0.5s ease;
 }
-.toggle.active {
-  background: url(https://i.ibb.co/rt3HybH/close.png);
-  background-repeat: no-repeat;
-  background-size: 25px;
-  background-position: center;
-  cursor: pointer;
+.home-btn {
+  color: white;
+  height: 70%;
+  width: 70%;
 }
 .front-page {
   position: absolute;
@@ -131,7 +128,7 @@ header .logo {
   transition: 0.2s;
 }
 .text a:hover {
-  background: #75cff0;
+  background: #039ccd;
 }
 .menu {
   position: absolute;
@@ -155,7 +152,7 @@ header .logo {
   color: #111;
 }
 .menu ul li a:hover {
-  color: #03a9f4;
+  color: #039ccd;
 }
 
 @media (max-width: 991px) {
@@ -172,11 +169,6 @@ header .logo {
 }
 
 /* body basic */
-.dashboard {
-  /* margin: 0;
-  font-family: "Roboto", sans-serif;
-  background: #75cff0 100%; */
-}
 
 .bg-color {
   background: linear-gradient(
@@ -254,6 +246,12 @@ header .logo {
   height: 25px;
 }
 
+.mapboxgl-popup-close-button {
+  height: 20px;
+  width: 20px;
+  color: red;
+}
+
 .table-container {
   background-color: rgba(82, 204, 252, 0.349);
   opacity: 0.8;
@@ -296,3 +294,136 @@ header .logo {
   box-shadow: var(--dark-shadow);
   cursor: pointer;
 }
+
+.filter-btn {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  font-size: 1rem;
+  font-weight: 500;
+  background: #fff;
+  padding: 0.1rem 0.5rem;
+  border: none;
+  border-radius: var(--radius);
+  letter-spacing: 1px;
+  box-shadow: var(--light-shadow);
+  transition: var(--transition);
+  z-index: 1;
+}
+
+.filter-btn:hover {
+  box-shadow: var(--dark-shadow);
+}
+
+.filter-box-container {
+  position: absolute;
+  top: 2.6rem;
+  right: 1rem;
+  height: 120px;
+  width: 150px;
+  background: #fff;
+  border-radius: var(--radius);
+  box-shadow: var(--light-shadow);
+  transition: var(--transition);
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  visibility: hidden;
+}
+
+.filter-box-container:hover {
+  box-shadow: var(--dark-shadow);
+  transition: var(--transition);
+}
+
+.make-visible {
+  visibility: visible;
+}
+
+.filter-box {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.filter-input {
+  margin-top: 0.5rem;
+  font-size: 0.9rem;
+  width: 90%;
+  border: none;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.479);
+}
+
+.filter-input-btn {
+  margin-top: 0.7rem;
+  font-size: 0.9rem;
+  font-weight: 500;
+  width: 90%;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  box-shadow: var(--light-shadow);
+  /* transition: var(--transition); */
+}
+.filter-input-btn:hover,
+.filter-reset-btn:hover {
+  box-shadow: var(--dark-shadow);
+  transition: var(--transition);
+}
+
+.filter-reset-btn {
+  margin-top: 0.25rem;
+  font-size: 0.9rem;
+  font-weight: 500;
+  width: 90%;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  box-shadow: var(--light-shadow);
+  /* transition: var(--transition); */
+  background-color: rgba(255, 0, 0, 0.342);
+  display: none;
+}
+
+.filter-reset-btn-show {
+  display: inline;
+}
+
+/* Modal */
+/*.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.329);
+  display: grid;
+  place-items: center;
+  transition: var(--transition);
+  visibility: hidden;
+  z-index: -1;
+}
+
+.show-modal {
+  visibility: visible;
+  z-index: 10;
+}
+.modal-container {
+  background: white;
+  border-radius: var(--radius);
+  width: 50vw;
+  height: 30vh;
+   max-width: var(--fixed-width); 
+  text-align: center;
+  display: grid;
+  place-items: center;
+  position: relative;
+}
+.close-modal-btn {
+  position: absolute;
+  top: 0.5rem;
+  right: 0.5rem;
+  font-size: 2rem;
+  background: transparent;
+  border-color: transparent;
+  color: rgb(187, 31, 31);
+  cursor: pointer;
+}*/
