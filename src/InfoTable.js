@@ -179,7 +179,7 @@ const InfoTable = ({ locations, filterLocations }) => {
                   align={column.align}
                   style={{
                     minWidth: column.minWidth,
-                    // width: "16.6%",
+                    width: "17%",
                     padding: "0.5rem 0.3rem",
                     backgroundColor: "#EAF2F9",
                   }}

@@ -1,41 +1,52 @@
+import { useState } from "react";
 import { Link } from "react-router-dom";
-import { useFetch } from "./custom-hooks/useFetch";
-
-const usersUrl = "https://606216fdac47190017a7267c.mockapi.io/user";
+import { IoMenu } from "react-icons/io5";
+import { useGlobalContext } from "./context";
 
 const Navbar = () => {
+  const { openSidebar } = useGlobalContext();
+
   let loggedUser = null;
   if (localStorage.getItem("user")) {
     loggedUser = JSON.parse(localStorage.getItem("user"));
   }
 
-  const handleLogout = (e) => {
-    // e.preventDefault();
+  const handleLogout = () => {
     localStorage.removeItem("user");
   };
 
   return (
-    <nav>
-      <ul className="nav">
-        <li className="nav-item">
-          <Link to="/">Home</Link>
-        </li>
-        <li className="nav-item">
-          <Link to="/dashboard">Dashboard</Link>
-        </li>
-        <li className="nav-item">
-          {loggedUser ? (
-            <div>
-              <p>Hello, {loggedUser.name}</p>
-              <form action="">
-                <button onClick={handleLogout}>LOGOUT</button>
-              </form>
-            </div>
-          ) : (
-            <Link to="/login">Login</Link>
-          )}
-        </li>
-      </ul>
+    <nav className="nav">
+      <div className="nav-center">
+        <div className="nav-header">
+          <h2 style={{ userSelect: "none" }}>KITE</h2>
+          <div className="toggle-sidemenu" onClick={openSidebar}>
+            <IoMenu className="home-btn" />
+          </div>
+        </div>
+        <ul className="nav-links">
+          <li className="nav-item">
+            <Link to="/">Home</Link>
+          </li>
+          <li className="nav-item">
+            <Link to="/dashboard">Dashboard</Link>
+          </li>
+          <li className="nav-item">
+            <Link to="#">About</Link>
+          </li>
+        </ul>
+        {loggedUser ? (
+          <form action="">
+            <button onClick={handleLogout} className="nav-btn">
+              LOGOUT
+            </button>
+          </form>
+        ) : (
+          <Link to="/login" className="nav-btn">
+            SIGN IN
+          </Link>
+        )}
+      </div>
     </nav>
   );
 };

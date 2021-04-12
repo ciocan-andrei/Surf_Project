@@ -14,6 +14,12 @@
   padding: 0;
   box-sizing: border-box;
   font-family: "Roboto", sans-serif;
+  list-style: none;
+  text-decoration: none;
+}
+
+a:visited {
+  color: black;
 }
 
 header {
@@ -171,17 +177,17 @@ header .logo {
 /* body basic */
 
 .bg-color {
+  background: rgb(245, 246, 255);
   background: linear-gradient(
-    45deg,
-    rgba(204, 211, 250, 0.63) 0%,
-    rgba(255, 255, 255, 0.74) 50%,
-    #75cff0 100%
+    90deg,
+    rgba(245, 246, 255, 1) 0%,
+    rgba(117, 207, 239, 1) 100%
   );
 }
 
 /* dashboard section */
 .section {
-  padding: 2rem 0;
+  padding: 1rem 0;
   width: 90vw;
   height: 100%;
   margin: 0 auto;
@@ -223,16 +229,6 @@ header .logo {
   color: #bdbdbd;
 }
 
-.nav {
-  display: flex;
-  list-style: none;
-}
-
-.nav-item {
-  margin: 0 2rem;
-  text-decoration: none;
-}
-
 .map-marker {
   background: none;
   border: none;
@@ -249,6 +245,7 @@ header .logo {
 .mapboxgl-popup-close-button {
   height: 20px;
   width: 20px;
+  font-size: 20px;
   color: red;
 }
 
@@ -411,6 +408,166 @@ header .logo {
   cursor: default;
 }
 
+/* NAVBAR */
+.nav {
+  background: rgb(245, 246, 255);
+  background: linear-gradient(
+    90deg,
+    rgba(245, 246, 255, 1) 0%,
+    rgba(117, 207, 239, 1) 100%
+  );
+  height: 5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  /* background: transparent; */
+  position: relative;
+  z-index: 1;
+}
+.nav-center {
+  width: 90vw;
+  max-width: var(--max-width);
+}
+
+.nav-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.nav-links {
+  display: none;
+}
+.nav-btn {
+  font-size: 1rem;
+  font-weight: 500;
+  background: #fff;
+  padding: 0.4rem;
+  border: none;
+  border-radius: var(--radius);
+  letter-spacing: 1px;
+  box-shadow: var(--light-shadow);
+  transition-property: box-shadow;
+  transition: var(--transition);
+  cursor: pointer;
+  z-index: 1;
+  visibility: hidden;
+}
+.nav-btn:hover {
+  box-shadow: var(--dark-shadow);
+  transition: var(--transition);
+}
+.toggle-sidemenu {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 50px;
+  height: 50px;
+  cursor: pointer;
+}
+
+/* nav media query */
+@media screen and (min-width: 992px) {
+  .nav-center {
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    align-items: center;
+  }
+  .toggle-sidemenu {
+    display: none;
+  }
+  .nav-btn {
+    visibility: visible;
+  }
+  .nav-links {
+    display: block;
+    justify-self: center;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    text-align: center;
+    height: 100%;
+    display: grid;
+    align-items: center;
+    align-content: center;
+  }
+  .nav-links li {
+    height: 100%;
+  }
+  .nav-item {
+    height: 100%;
+    background: transparent;
+    border-color: transparent;
+    font-size: 1.1rem;
+    color: white;
+    text-transform: capitalize;
+    letter-spacing: 1px;
+    width: 10rem;
+  }
+}
+
+/* sidebar */
+.sidebar-wrapper {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: grid;
+  place-items: center;
+  visibility: hidden;
+  z-index: -1;
+  transition: var(--transition);
+  transform: scale(0);
+  background: rgba(0, 0, 0, 0.5);
+}
+.sidebar-wrapper.show {
+  visibility: visible;
+  z-index: 3;
+  transform: scale(1);
+}
+.sidebar {
+  width: 90vw;
+  height: 50vh;
+  max-width: var(--fixed-width);
+  background: white;
+  border-radius: var(--radius);
+  box-shadow: var(--dark-shadow);
+  position: relative;
+  padding: 4rem 2rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+.close-btn {
+  font-size: 2rem;
+  background: transparent;
+  border-color: transparent;
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  cursor: pointer;
+}
+.sidebar-menu {
+  font-size: 1.5rem;
+  margin: 1rem 0;
+}
+.sidebar-btn {
+  font-size: 1rem;
+  font-weight: 500;
+  background: #fff;
+  margin-top: 3rem;
+  padding: 0.5rem;
+  border: none;
+  border-radius: var(--radius);
+  letter-spacing: 1px;
+  box-shadow: var(--light-shadow);
+  transition-property: box-shadow;
+  transition: var(--transition);
+  cursor: pointer;
+}
+.sidebar-btn:hover {
+  box-shadow: var(--dark-shadow);
+}
 /* Modal */
 /*.modal-overlay {
   position: fixed;

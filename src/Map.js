@@ -6,7 +6,7 @@ import { BsFilter } from "react-icons/bs";
 
 const favsUrl = "https://606216fdac47190017a7267c.mockapi.io/favourites";
 
-const Map = ({ locations, filterLocations }) => {
+const Map = ({ locations, filterLocations, faveSpot }) => {
   const {
     isMapFilterOpen,
     toggleMapFilter,
@@ -30,20 +30,13 @@ const Map = ({ locations, filterLocations }) => {
     userId = loggedUser.id;
   }
 
-  let favSpot = useFetch(`${favsUrl}/${userId}`);
+  // const favSpot = useFetch(`${favsUrl}/${userId}`);
+  const [favSpot, setFavSpot] = useState(null);
   const [selectedLocation, setSelectedLocation] = useState(null);
 
   useEffect(() => {
-    const listener = (e) => {
-      if (e.key === "Escape") {
-        setSelectedLocation(null);
-      }
-    };
-    window.addEventListener("keydown", listener);
-    return () => {
-      window.removeEventListener("keydown", listener);
-    };
-  }, []);
+    setFavSpot(faveSpot);
+  }, [faveSpot]);
 
   const applyFilter = (e) => {
     e.preventDefault();
@@ -78,7 +71,8 @@ const Map = ({ locations, filterLocations }) => {
       const res = await fetch(`${favsUrl}/${userId}`, { method: "DELETE" });
       const data = await res.json();
       setSelectedLocation(null);
-      window.location.reload();
+      setFavSpot(null);
+      console.log(data);
       return data;
     } catch (e) {
       console.log(e);
@@ -87,20 +81,22 @@ const Map = ({ locations, filterLocations }) => {
 
   const saveFav = async (spotId) => {
     try {
+      removeFav();
       const res = await fetch(favsUrl, {
         method: "POST",
         headers: {
           "Content-Type": "applicaton/json",
         },
         body: JSON.stringify({
-          id: userId,
+          id: userId.toString(),
           createdAt: new Date().toLocaleString(),
-          spot: spotId,
+          spot: spotId.toString(),
         }),
       });
       const data = await res.json();
       setSelectedLocation(null);
-      window.location.reload();
+      console.log(favSpot);
+      console.log(data);
       return data;
     } catch (e) {
       console.log(e);
@@ -200,25 +196,21 @@ const Map = ({ locations, filterLocations }) => {
               <p>{selectedLocation.country}</p>
               <p>Wind probability {selectedLocation.probability}</p>
               {favSpot && favSpot.spot === selectedLocation.id ? (
-                <button
-                  className="rm-fav"
-                  onClick={() => {
-                    removeFav();
-                    setViewport(viewport);
-                  }}
-                >
+                <button className="rm-fav" onClick={removeFav}>
                   Remove favourite
                 </button>
               ) : (
-                <button
-                  className="add-fav"
-                  onClick={() => {
-                    saveFav(selectedLocation.id);
-                    // setViewport(viewport);
-                  }}
-                >
-                  Save as favourite
-                </button>
+                userId && (
+                  <button
+                    className="add-fav"
+                    onClick={() => {
+                      saveFav(selectedLocation.id);
+                      // setViewport(viewport);
+                    }}
+                  >
+                    Save as favourite
+                  </button>
+                )
               )}
             </div>
           </Popup>

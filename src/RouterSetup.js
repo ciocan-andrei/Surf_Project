@@ -5,6 +5,7 @@ import Navbar from "./Navbar";
 import Home from "./Home";
 import ErrorPage from "./ErrorPage";
 import Login from "./Login";
+import Sidebar from "./Sidebar";
 
 const RouterSetup = () => {
   return (
@@ -15,14 +16,17 @@ const RouterSetup = () => {
         </Route>
         <Route path="/login">
           <Navbar />
+          <Sidebar />
           <Login />
         </Route>
         <Route path="/dashboard">
           <Navbar />
+          <Sidebar />
           <Dashboard />
         </Route>
         <Route path="*">
           <Navbar />
+          <Sidebar />
           <ErrorPage />
         </Route>
       </Switch>

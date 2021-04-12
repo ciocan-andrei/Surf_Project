@@ -24,5 +24,6 @@ export const useFetch = (url) => {
     getItems();
   }, [url]);
   // return { loading, items };
+  // console.log(items);
   return items;
 };

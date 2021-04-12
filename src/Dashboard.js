@@ -4,9 +4,17 @@ import Map from "./Map";
 import { useFetch } from "./custom-hooks/useFetch";
 
 const spotsUrl = "https://606216fdac47190017a7267c.mockapi.io/spot";
+const favsUrl = "https://606216fdac47190017a7267c.mockapi.io/favourites";
 
 const Dashboard = () => {
   const locations = useFetch(spotsUrl);
+
+  let userId = null;
+  if (localStorage.getItem("user")) {
+    const loggedUser = JSON.parse(localStorage.getItem("user"));
+    userId = loggedUser.id;
+  }
+  const favSpot = useFetch(`${favsUrl}/${userId}`);
 
   const [filteredLocations, setFilteredLocations] = useState([]);
   const [showFilteredLocations, setShowFilteredLocations] = useState(false);
@@ -39,6 +47,7 @@ const Dashboard = () => {
         <Map
           locations={!showFilteredLocations ? locations : filteredLocations}
           filterLocations={filterLocations}
+          faveSpot={favSpot}
         />
         <InfoTable
           locations={!showFilteredLocations ? locations : filteredLocations}

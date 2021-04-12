@@ -41,6 +41,9 @@ const Home = () => {
             <Link to="/dashboard">Dashboard</Link>
           </li>
           <li>
+            <Link to="#">About</Link>
+          </li>
+          <li>
             <Link to="#">Register</Link>
           </li>
         </ul>
