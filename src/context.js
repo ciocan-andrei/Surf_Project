@@ -4,15 +4,16 @@ const AppContext = React.createContext();
 
 const AppProvider = ({ children }) => {
   // CHECK FOR LOGGED USER
-  // const [loggedUser, setLoggedUser] = useState(null);
-  // if (localStorage.getItem("user")) {
-  //   setLoggedUser(JSON.parse(localStorage.getItem("user")));
-  // }
+  const [isUserLogged, setIsUserLogged] = useState(false);
 
-  // const handleLogout = () => {
-  //   localStorage.removeItem("user");
-  //   setLoggedUser(null);
-  // };
+  const userLoggedOn = () => {
+    setIsUserLogged(true);
+  };
+
+  const userLoggedOff = () => {
+    localStorage.removeItem("user");
+    setIsUserLogged(false);
+  };
 
   // DASHBOARD MAP
   const [isMapFilterOpen, setIsMapFilterOpen] = useState(false);
@@ -52,8 +53,9 @@ const AppProvider = ({ children }) => {
         openSidebar,
         closeSidebar,
         //LOGGED USER
-        // loggedUser,
-        // handleLogout,
+        isUserLogged,
+        userLoggedOn,
+        userLoggedOff,
       }}
     >
       {children}

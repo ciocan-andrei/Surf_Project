@@ -6,6 +6,7 @@ import Home from "./Home";
 import ErrorPage from "./ErrorPage";
 import Login from "./Login";
 import Sidebar from "./Sidebar";
+import Register from "./Register";
 
 const RouterSetup = () => {
   return (
@@ -18,6 +19,11 @@ const RouterSetup = () => {
           <Navbar />
           <Sidebar />
           <Login />
+        </Route>
+        <Route path="/register">
+          <Navbar />
+          <Sidebar />
+          <Register />
         </Route>
         <Route path="/dashboard">
           <Navbar />

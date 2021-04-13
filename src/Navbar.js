@@ -43,7 +43,7 @@ const Navbar = () => {
           </form>
         ) : (
           <Link to="/login" className="nav-btn">
-            SIGN IN
+            LOG IN
           </Link>
         )}
       </div>

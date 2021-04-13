@@ -14,11 +14,7 @@ const Home = () => {
         <header>
           <h2 className="logo">Kite</h2>
           <div className="toggle" onClick={handleToggle}>
-            {sideMenuToggle ? (
-              <IoClose className="home-btn" />
-            ) : (
-              <IoMenu className="home-btn" />
-            )}
+            {!sideMenuToggle && <IoMenu className="home-btn" />}
           </div>
         </header>
         <video src="seasurfer.mp4" type="video/mp4" autoPlay loop muted></video>
@@ -33,9 +29,12 @@ const Home = () => {
         </div>
       </section>
       <div className="menu">
+        <div className="close-menu-box" onClick={handleToggle}>
+          <IoClose className="close-menu" />
+        </div>
         <ul>
           <li>
-            <Link to="/login">Login</Link>
+            <Link to="/login">Log In</Link>
           </li>
           <li>
             <Link to="/dashboard">Dashboard</Link>
@@ -44,7 +43,7 @@ const Home = () => {
             <Link to="#">About</Link>
           </li>
           <li>
-            <Link to="#">Register</Link>
+            <Link to="/register">Register</Link>
           </li>
         </ul>
       </div>

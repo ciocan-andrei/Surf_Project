@@ -81,22 +81,24 @@ const Map = ({ locations, filterLocations, faveSpot }) => {
 
   const saveFav = async (spotId) => {
     try {
-      removeFav();
+      if (favSpot) {
+        removeFav();
+      }
       const res = await fetch(favsUrl, {
         method: "POST",
         headers: {
-          "Content-Type": "applicaton/json",
+          "Content-Type": "application/json",
         },
         body: JSON.stringify({
           id: userId.toString(),
-          createdAt: new Date().toLocaleString(),
+          createdAt: new Date(),
           spot: spotId.toString(),
         }),
       });
       const data = await res.json();
       setSelectedLocation(null);
+      setFavSpot(data);
       console.log(favSpot);
-      console.log(data);
       return data;
     } catch (e) {
       console.log(e);
