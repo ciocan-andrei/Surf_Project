@@ -1,4 +1,3 @@
-import { useState } from "react";
 import { Link } from "react-router-dom";
 import { IoMenu } from "react-icons/io5";
 import { useGlobalContext } from "./context";
@@ -32,7 +31,7 @@ const Navbar = () => {
             <Link to="/dashboard">Dashboard</Link>
           </li>
           <li className="nav-item">
-            <Link to="#">About</Link>
+            <Link to="/about">About</Link>
           </li>
         </ul>
         {loggedUser ? (

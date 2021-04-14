@@ -2,8 +2,8 @@ import React from "react";
 
 const ErrorPage = () => {
   return (
-    <div>
-      <p>Nothing to be found here. Keep mining!</p>
+    <div className="bg-color">
+      <h3 style={{ padding: "2rem 0 0 2rem" }}>Nothing to be found here.</h3>
     </div>
   );
 };

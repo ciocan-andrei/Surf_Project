@@ -94,7 +94,6 @@ const InfoTable = ({ locations, filterLocations }) => {
   const [filterTable, setFilterTable] = useState("");
   const [order, setOrder] = React.useState("asc");
   const [orderBy, setOrderBy] = React.useState("calories");
-  const [selected, setSelected] = React.useState([]);
 
   useEffect(() => {
     setPage(0);

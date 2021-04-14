@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef } from "react";
 import ReactMapGL, { Marker, Popup } from "react-map-gl";
 import { useGlobalContext } from "./context";
-import { useFetch } from "./custom-hooks/useFetch";
+
 import { BsFilter } from "react-icons/bs";
 
 const favsUrl = "https://606216fdac47190017a7267c.mockapi.io/favourites";
@@ -13,6 +13,7 @@ const Map = ({ locations, filterLocations, faveSpot }) => {
     showResetFilterBtn,
     openResetFilterBtn,
     closeResetFilterBtn,
+    openNewSpot,
   } = useGlobalContext();
 
   const countryFilterRef = useRef(null);
@@ -118,7 +119,7 @@ const Map = ({ locations, filterLocations, faveSpot }) => {
         doubleClickZoom={false}
         dragRotate={false}
         onDblClick={(e) => {
-          console.log(e.lngLat);
+          userId && openNewSpot(e.lngLat[0], e.lngLat[1]);
         }}
         onClick={() => setSelectedLocation(null)}
         mapStyle="mapbox://styles/mapbox/outdoors-v11"
@@ -127,6 +128,11 @@ const Map = ({ locations, filterLocations, faveSpot }) => {
         <button className="filter-btn" onClick={toggleMapFilter}>
           FILTERS <BsFilter />
         </button>
+        {userId && (
+          <p className="map-info-p">
+            Double click on the map to add a new location.
+          </p>
+        )}
         <div
           className={`filter-box-container ${
             isMapFilterOpen && "make-visible"
@@ -194,9 +200,9 @@ const Map = ({ locations, filterLocations, faveSpot }) => {
             closeOnClick={false}
           >
             <div className="map-popup">
-              <h2>{selectedLocation.name}</h2>
-              <p>{selectedLocation.country}</p>
-              <p>Wind probability {selectedLocation.probability}</p>
+              <h3>{selectedLocation.name}</h3>
+              <p>Country: {selectedLocation.country}</p>
+              <p>Wind probability: {selectedLocation.probability}%</p>
               {favSpot && favSpot.spot === selectedLocation.id ? (
                 <button className="rm-fav" onClick={removeFav}>
                   Remove favourite

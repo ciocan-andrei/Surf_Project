@@ -1,22 +1,25 @@
 import React, { useRef } from "react";
 import { useFetch } from "./custom-hooks/useFetch";
 import { useHistory } from "react-router";
+import Modal from "./ModalMsg";
+import { useGlobalContext } from "./context";
 
 const usersUrl = "https://606216fdac47190017a7267c.mockapi.io/user";
 
 const Register = () => {
   let history = useHistory();
-
+  const {
+    closeModal,
+    modalMsg,
+    modalType,
+    modalContent,
+    isModalOpen,
+  } = useGlobalContext();
   const refEmail = useRef(null);
   const refName = useRef(null);
   const refFirstPass = useRef(null);
   const refSecondPass = useRef(null);
-
   const users = useFetch(usersUrl);
-
-  const handleLogin = (data) => {
-    localStorage.setItem("user", JSON.stringify(data));
-  };
 
   const validateEmail = (email) => {
     const re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
@@ -26,16 +29,22 @@ const Register = () => {
   const handleRegister = async (e) => {
     e.preventDefault();
     try {
+      if (!refName.current.value) {
+        modalMsg("Your name is required!", "error");
+      }
+      if (!refFirstPass.current.value) {
+        modalMsg("Password is required!", "error");
+      }
       if (!validateEmail(refEmail.current.value)) {
-        throw new Error("Email is invalid!");
+        modalMsg("Email is invalid!", "error");
       }
       for (let user of users) {
         if (user.email === refEmail.current.value) {
-          throw new Error("Email is already used!");
+          modalMsg("Email is already used!", "error");
         }
       }
       if (refFirstPass.current.value !== refSecondPass.current.value) {
-        throw new Error("Wrong password!");
+        modalMsg("Wrong password!", "error");
       } else {
         const res = await fetch(usersUrl, {
           method: "POST",
@@ -50,8 +59,16 @@ const Register = () => {
         });
         if (res.ok) {
           const data = await res.json();
-          await handleLogin(data);
-          history.push("/dashboard");
+          // await handleLogin(data);
+          try {
+            const userRes = await fetch(`${usersUrl}/${data.id}`);
+            const userData = await userRes.json();
+            localStorage.setItem("user", JSON.stringify(userData));
+            modalMsg("You've been successfully registered!", "info");
+            history.push("/dashboard");
+          } catch (e) {
+            modalMsg("There was a problem during registration!", "error");
+          }
         }
       }
     } catch (e) {
@@ -67,6 +84,13 @@ const Register = () => {
   return (
     <div className="bg-color">
       <section className="login-page">
+        {isModalOpen && (
+          <Modal
+            closeModal={closeModal}
+            modalType={modalType}
+            modalContent={modalContent}
+          />
+        )}
         <div className="login-form">
           <img className="login-img" src="pexels-kitesurf.jpeg" alt="" />
 

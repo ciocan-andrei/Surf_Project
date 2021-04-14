@@ -8,6 +8,17 @@ const Home = () => {
     setSideMenuToggle(!sideMenuToggle);
   };
 
+  let user = null;
+  if (localStorage.getItem("user")) {
+    const loggedUser = JSON.parse(localStorage.getItem("user"));
+    user = loggedUser;
+  }
+
+  const handleSignOut = () => {
+    localStorage.removeItem("user");
+    window.location.reload();
+  };
+
   return (
     <>
       <section className={`front-page ${sideMenuToggle ? "active" : ""}`}>
@@ -22,7 +33,7 @@ const Home = () => {
         <div className="text">
           <h2>WELCOME</h2>
           <h3>to kitesurf</h3>
-          <p>Lots of kites.</p>
+          <p>Choose from over 100 places!</p>
           <Link to="/dashboard" className="dashboard-item">
             GET STARTED
           </Link>
@@ -33,19 +44,33 @@ const Home = () => {
           <IoClose className="close-menu" />
         </div>
         <ul>
-          <li>
-            <Link to="/login">Log In</Link>
-          </li>
+          {!user ? (
+            <>
+              <li>
+                <Link to="/login">Log In</Link>
+              </li>
+              <li>
+                <Link to="/register">Register</Link>
+              </li>
+            </>
+          ) : (
+            <div>
+              <p>Welcome back,</p>
+              <p className="home-p">{user.name}</p>
+            </div>
+          )}
           <li>
             <Link to="/dashboard">Dashboard</Link>
           </li>
           <li>
-            <Link to="#">About</Link>
-          </li>
-          <li>
-            <Link to="/register">Register</Link>
+            <Link to="/about">About</Link>
           </li>
         </ul>
+        {user && (
+          <button className="sign-out-btn" onClick={handleSignOut}>
+            SIGN OUT
+          </button>
+        )}
       </div>
     </>
   );

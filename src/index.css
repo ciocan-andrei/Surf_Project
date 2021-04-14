@@ -7,6 +7,8 @@
   --max-width: 1170px;
   --fixed-width: 620px;
   --nice-blue: #039ccd;
+  --light-red: rgba(255, 0, 0, 0.5);
+  --light-green: rgba(0, 255, 0, 0.25);
 }
 
 /* HOMEPAGE */
@@ -28,7 +30,7 @@ header {
   top: 0;
   left: 0;
   width: 100%;
-  padding: 40px 100px;
+  padding: 40px 90px;
   z-index: 1000;
   display: flex;
   justify-content: space-between;
@@ -37,7 +39,7 @@ header {
 header .logo {
   color: #fff;
   text-transform: uppercase;
-  cursor: pointer;
+  pointer-events: none;
 }
 .toggle {
   display: flex;
@@ -101,21 +103,21 @@ header .logo {
 }
 
 .text h2 {
-  font-size: 5em;
+  font-size: 5rem;
   font-weight: 800;
   color: #fff;
   line-height: 1em;
   text-transform: uppercase;
 }
 .text h3 {
-  font-size: 4em;
+  font-size: 3.9rem;
   font-weight: 700;
   color: #fff;
   line-height: 1em;
   text-transform: uppercase;
 }
 .text p {
-  font-size: 1.1em;
+  font-size: 1.2rem;
   color: #fff;
   margin: 20px 0;
   font-weight: 400;
@@ -132,10 +134,12 @@ header .logo {
   margin-top: 10px;
   color: #111;
   letter-spacing: 2px;
-  transition: 0.2s;
+  transition: var(--transition);
+  border-radius: var(--radius);
 }
 .text a:hover {
   background: var(--nice-blue);
+  transition: var(--transition);
 }
 .menu {
   position: absolute;
@@ -174,6 +178,32 @@ header .logo {
 }
 .menu ul li a:hover {
   color: var(--nice-blue);
+}
+.menu .home-p {
+  margin-bottom: 2rem;
+  /* font-size: 1rem; */
+}
+.sign-out-btn {
+  width: 200px;
+  color: white;
+  font-size: 1rem;
+  font-weight: 500;
+  background: var(--nice-blue);
+  padding: 0.5rem;
+  margin-top: 1rem;
+  border: none;
+  border-radius: var(--radius);
+  letter-spacing: 1px;
+  box-shadow: var(--light-shadow);
+  transition-property: box-shadow;
+  transition: var(--transition);
+  cursor: pointer;
+  position: absolute;
+  bottom: 2rem;
+}
+.sign-out-btn:hover {
+  box-shadow: var(--dark-shadow);
+  transition: var(--transition);
 }
 
 @media (max-width: 991px) {
@@ -316,10 +346,10 @@ header .logo {
   display: block;
   width: 200px;
   margin: 1rem auto 0 auto;
-  color: rgb(104, 9, 9);
+  color: var(--light-red);
   letter-spacing: var(--spacing);
   background: transparent;
-  border: 1px solid rgb(104, 9, 9);
+  border: 1px solid var(--light-red);
   padding: 0.25rem 0.5rem;
   border-radius: var(--radius);
   box-shadow: var(--light-shadow);
@@ -417,7 +447,7 @@ header .logo {
   border: 1px solid rgba(0, 0, 0, 0.1);
   box-shadow: var(--light-shadow);
   /* transition: var(--transition); */
-  background-color: rgba(255, 0, 0, 0.342);
+  background-color: var(--light-red);
   display: none;
 }
 
@@ -427,6 +457,21 @@ header .logo {
 
 .map-popup {
   cursor: default;
+  display: flex;
+  flex-direction: column;
+  margin: 1rem 1rem 0 1rem;
+  /* padding: 1rem; */
+  align-items: center;
+}
+
+.map-info-p {
+  position: absolute;
+  top: 0.5rem;
+  left: 0.5rem;
+  color: white;
+  text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000,
+    1px 1px 0 #000;
+  font-size: 0.8rem;
 }
 
 /* NAVBAR */
@@ -708,8 +753,27 @@ header .logo {
   }
 }
 
-/* Modal */
-/*.modal-overlay {
+/* Modal message */
+.modal {
+  position: absolute;
+  top: 8vh;
+  left: 50%;
+  color: #fff;
+  transform: translateX(-50%);
+  background: rgba(255, 255, 255);
+  display: inline-block;
+  padding: 0.25rem 1rem;
+  border-radius: var(--radius);
+}
+.modal-error {
+  background: var(--light-red);
+}
+.modal-info {
+  background: var(--light-green);
+}
+
+/* Modal new spot*/
+.modal-overlay {
   position: fixed;
   top: 0;
   left: 0;
@@ -731,20 +795,37 @@ header .logo {
   background: white;
   border-radius: var(--radius);
   width: 50vw;
-  height: 30vh;
-   max-width: var(--fixed-width); 
-  text-align: center;
-  display: grid;
-  place-items: center;
+  height: 600px;
+  max-width: var(--fixed-width);
   position: relative;
+  /* text-align: center; */
+}
+.modal-flex {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 }
 .close-modal-btn {
   position: absolute;
-  top: 0.5rem;
-  right: 0.5rem;
+  top: 1rem;
+  right: 1rem;
   font-size: 2rem;
   background: transparent;
   border-color: transparent;
-  color: rgb(187, 31, 31);
   cursor: pointer;
-}*/
+}
+.label-modal-add {
+  position: relative;
+  top: 2.5rem;
+  left: -9rem;
+  color: #999;
+  transition: 0.5s;
+  pointer-events: none;
+}
+
+@media (max-width: 991px) {
+  .modal-container {
+    width: 90vw;
+  }
+}

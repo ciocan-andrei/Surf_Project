@@ -7,6 +7,7 @@ import ErrorPage from "./ErrorPage";
 import Login from "./Login";
 import Sidebar from "./Sidebar";
 import Register from "./Register";
+import About from "./About";
 
 const RouterSetup = () => {
   return (
@@ -29,6 +30,11 @@ const RouterSetup = () => {
           <Navbar />
           <Sidebar />
           <Dashboard />
+        </Route>
+        <Route path="/about">
+          <Navbar />
+          <Sidebar />
+          <About />
         </Route>
         <Route path="*">
           <Navbar />

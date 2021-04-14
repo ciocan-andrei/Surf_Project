@@ -1,13 +1,22 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import InfoTable from "./InfoTable";
 import Map from "./Map";
 import { useFetch } from "./custom-hooks/useFetch";
+import Modal from "./ModalMsg";
+import { useGlobalContext } from "./context";
+import ModalNewSpot from "./ModalNewSpot";
 
 const spotsUrl = "https://606216fdac47190017a7267c.mockapi.io/spot";
 const favsUrl = "https://606216fdac47190017a7267c.mockapi.io/favourites";
 
 const Dashboard = () => {
   const locations = useFetch(spotsUrl);
+  const {
+    isModalOpen,
+    closeModal,
+    modalContent,
+    modalType,
+  } = useGlobalContext();
 
   let userId = null;
   if (localStorage.getItem("user")) {
@@ -43,6 +52,14 @@ const Dashboard = () => {
 
   return (
     <div className="bg-color">
+      {isModalOpen && (
+        <Modal
+          closeModal={closeModal}
+          modalContent={modalContent}
+          modalType={modalType}
+        />
+      )}
+      <ModalNewSpot />
       <main className="section">
         <Map
           locations={!showFilteredLocations ? locations : filteredLocations}

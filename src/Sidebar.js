@@ -38,7 +38,7 @@ const Sidebar = () => {
               <Link to="/dashboard">Dashboard</Link>
             </li>
             <li className="sidebar-menu" onClick={closeSidebar}>
-              <Link to="#">About</Link>
+              <Link to="/about">About</Link>
             </li>
           </ul>
           {loggedUser ? (
