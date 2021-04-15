@@ -1,23 +1,19 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { IoClose, IoMenu } from "react-icons/io5";
+import { useGlobalContext } from "./context";
 
 const Home = () => {
+  const { loggedUser, userSignedOut, isUserSigned } = useGlobalContext();
   const [sideMenuToggle, setSideMenuToggle] = useState(false);
   const handleToggle = () => {
     setSideMenuToggle(!sideMenuToggle);
   };
 
-  let user = null;
-  if (localStorage.getItem("user")) {
-    const loggedUser = JSON.parse(localStorage.getItem("user"));
-    user = loggedUser;
-  }
-
-  const handleSignOut = () => {
-    localStorage.removeItem("user");
-    window.location.reload();
-  };
+  useEffect(() => {
+    isUserSigned();
+    // console.log("smth");
+  }, []);
 
   return (
     <>
@@ -44,7 +40,7 @@ const Home = () => {
           <IoClose className="close-menu" />
         </div>
         <ul>
-          {!user ? (
+          {!loggedUser ? (
             <>
               <li>
                 <Link to="/login">Log In</Link>
@@ -56,7 +52,7 @@ const Home = () => {
           ) : (
             <div>
               <p>Welcome back,</p>
-              <p className="home-p">{user.name}</p>
+              <p className="home-p">{loggedUser.name}</p>
             </div>
           )}
           <li>
@@ -66,8 +62,8 @@ const Home = () => {
             <Link to="/about">About</Link>
           </li>
         </ul>
-        {user && (
-          <button className="sign-out-btn" onClick={handleSignOut}>
+        {loggedUser && (
+          <button className="sign-out-btn" onClick={userSignedOut}>
             SIGN OUT
           </button>
         )}

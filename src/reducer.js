@@ -1,4 +1,25 @@
 const reducer = (state, action) => {
+  if (action.type === "USER_SIGNED_IN") {
+    const user = action.payload;
+    localStorage.setItem("user", JSON.stringify(user));
+    return {
+      ...state,
+      loggedUser: JSON.parse(localStorage.getItem("user")),
+    };
+  }
+  if (action.type === "USER_SIGNED_OUT") {
+    localStorage.removeItem("user");
+    return {
+      ...state,
+      loggedUser: null,
+    };
+  }
+  if (action.type === "IS_USER_SIGNED") {
+    return {
+      ...state,
+      loggedUser: JSON.parse(localStorage.getItem("user")),
+    };
+  }
   if (action.type === "SHOW_MSG") {
     const info = action.payload;
     return {

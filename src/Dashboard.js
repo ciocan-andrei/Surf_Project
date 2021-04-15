@@ -16,13 +16,11 @@ const Dashboard = () => {
     closeModal,
     modalContent,
     modalType,
+    loggedUser,
   } = useGlobalContext();
 
   let userId = null;
-  if (localStorage.getItem("user")) {
-    const loggedUser = JSON.parse(localStorage.getItem("user"));
-    userId = loggedUser.id;
-  }
+  if (loggedUser) userId = loggedUser.id;
   const favSpot = useFetch(`${favsUrl}/${userId}`);
 
   const [filteredLocations, setFilteredLocations] = useState([]);

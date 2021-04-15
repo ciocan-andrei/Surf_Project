@@ -8,14 +8,17 @@ import Modal from "./ModalMsg";
 const usersUrl = "https://606216fdac47190017a7267c.mockapi.io/user";
 
 const Login = () => {
-  let history = useHistory();
   const {
     closeModal,
     modalMsg,
     modalType,
     modalContent,
     isModalOpen,
+    loggedUser,
+    userSignedIn,
+    userSignedOut,
   } = useGlobalContext();
+  let history = useHistory();
   const refEmail = useRef(null);
   const users = useFetch(usersUrl);
 
@@ -23,30 +26,29 @@ const Login = () => {
     e.preventDefault();
     const email = refEmail.current.value;
     for (let user of users) {
-      if (user.email === email)
-        localStorage.setItem("user", JSON.stringify(user));
+      if (user.email === email) {
+        // localStorage.setItem("user", JSON.stringify(user));
+        userSignedIn(user);
+        modalMsg("You've successfully logged on!", "info");
+        return history.push("/dashboard");
+      }
     }
     try {
-      if (localStorage.getItem("user")) {
-        modalMsg("You've successfully logged on!", "info");
-        history.push("/dashboard");
-      } else {
-        modalMsg("Wrong email or password. Please try again!", "error");
-      }
+      return modalMsg("Wrong email or password. Please try again!", "error");
     } catch (e) {
       console.log(e.message);
     }
   };
 
-  const handleLogout = (e) => {
-    // e.preventDefault();
-    localStorage.removeItem("user");
-  };
+  // const handleLogout = (e) => {
+  //   // e.preventDefault();
+  //   localStorage.removeItem("user");
+  // };
 
-  let loggedUser = null;
-  if (localStorage.getItem("user")) {
-    loggedUser = JSON.parse(localStorage.getItem("user"));
-  }
+  // let loggedUser = null;
+  // if (localStorage.getItem("user")) {
+  //   loggedUser = JSON.parse(localStorage.getItem("user"));
+  // }
 
   return (
     <div className="bg-color">
@@ -98,7 +100,7 @@ const Login = () => {
               <button
                 className="login-btn"
                 type="submit"
-                onClick={handleLogout}
+                onClick={userSignedOut}
               >
                 LOGOUT
               </button>

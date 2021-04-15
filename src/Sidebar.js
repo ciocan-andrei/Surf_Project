@@ -6,18 +6,9 @@ const Sidebar = () => {
   const {
     isSidebarOpen,
     closeSidebar,
-    // loggedUser,
-    // handleLogout,
+    loggedUser,
+    userSignedOut,
   } = useGlobalContext();
-
-  let loggedUser = null;
-  if (localStorage.getItem("user")) {
-    loggedUser = JSON.parse(localStorage.getItem("user"));
-  }
-
-  const handleLogout = () => {
-    localStorage.removeItem("user");
-  };
 
   return (
     <div
@@ -43,7 +34,7 @@ const Sidebar = () => {
           </ul>
           {loggedUser ? (
             <form action="">
-              <button onClick={handleLogout} className="sidebar-btn">
+              <button onClick={userSignedOut} className="sidebar-btn">
                 LOGOUT
               </button>
             </form>

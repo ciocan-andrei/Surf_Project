@@ -14,6 +14,8 @@ const Register = () => {
     modalType,
     modalContent,
     isModalOpen,
+    userSignedIn,
+    loggedUser,
   } = useGlobalContext();
   const refEmail = useRef(null);
   const refName = useRef(null);
@@ -63,7 +65,7 @@ const Register = () => {
           try {
             const userRes = await fetch(`${usersUrl}/${data.id}`);
             const userData = await userRes.json();
-            localStorage.setItem("user", JSON.stringify(userData));
+            userSignedIn(userData);
             modalMsg("You've been successfully registered!", "info");
             history.push("/dashboard");
           } catch (e) {
@@ -75,11 +77,6 @@ const Register = () => {
       console.log(e.message);
     }
   };
-
-  let loggedUser = null;
-  if (localStorage.getItem("user")) {
-    loggedUser = JSON.parse(localStorage.getItem("user"));
-  }
 
   return (
     <div className="bg-color">

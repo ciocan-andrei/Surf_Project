@@ -14,6 +14,7 @@ const Map = ({ locations, filterLocations, faveSpot }) => {
     openResetFilterBtn,
     closeResetFilterBtn,
     openNewSpot,
+    loggedUser,
   } = useGlobalContext();
 
   const countryFilterRef = useRef(null);
@@ -26,10 +27,7 @@ const Map = ({ locations, filterLocations, faveSpot }) => {
   });
 
   let userId = null;
-  if (localStorage.getItem("user")) {
-    const loggedUser = JSON.parse(localStorage.getItem("user"));
-    userId = loggedUser.id;
-  }
+  if (loggedUser) userId = loggedUser.id;
 
   // const favSpot = useFetch(`${favsUrl}/${userId}`);
   const [favSpot, setFavSpot] = useState(null);

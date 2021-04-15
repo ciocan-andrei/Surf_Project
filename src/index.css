@@ -828,4 +828,9 @@ header .logo {
   .modal-container {
     width: 90vw;
   }
+  .modal {
+    font-size: 0.7rem;
+    top: 12vh;
+    width: 90vw;
+  }
 }

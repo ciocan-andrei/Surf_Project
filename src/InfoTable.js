@@ -87,7 +87,7 @@ function stableSort(array, comparator) {
   return stabilizedThis.map((el) => el[0]);
 }
 
-const InfoTable = ({ locations, filterLocations }) => {
+const InfoTable = ({ locations }) => {
   const classes = useStyles();
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(20);

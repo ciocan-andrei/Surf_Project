@@ -3,16 +3,7 @@ import { IoMenu } from "react-icons/io5";
 import { useGlobalContext } from "./context";
 
 const Navbar = () => {
-  const { openSidebar } = useGlobalContext();
-
-  let loggedUser = null;
-  if (localStorage.getItem("user")) {
-    loggedUser = JSON.parse(localStorage.getItem("user"));
-  }
-
-  const handleLogout = () => {
-    localStorage.removeItem("user");
-  };
+  const { openSidebar, loggedUser, userSignedOut } = useGlobalContext();
 
   return (
     <nav className="nav">
@@ -36,7 +27,7 @@ const Navbar = () => {
         </ul>
         {loggedUser ? (
           <form action="">
-            <button onClick={handleLogout} className="nav-btn">
+            <button onClick={userSignedOut} className="nav-btn">
               LOGOUT
             </button>
           </form>

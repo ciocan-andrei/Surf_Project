@@ -10,21 +10,22 @@ const defaultState = {
   isNewSpotOpen: false,
   newSpotLong: null,
   newSpotLat: null,
+  //logged user
+  loggedUser: null,
 };
 
 const AppProvider = ({ children }) => {
   const [state, dispatch] = useReducer(reducer, defaultState);
   // CHECK FOR LOGGED USER
-  // const [isUserLogged, setIsUserLogged] = useState(false);
-
-  // const userLoggedOn = () => {
-  //   setIsUserLogged(true);
-  // };
-
-  // const userLoggedOff = () => {
-  //   localStorage.removeItem("user");
-  //   setIsUserLogged(false);
-  // };
+  const userSignedIn = (user) => {
+    dispatch({ type: "USER_SIGNED_IN", payload: user });
+  };
+  const userSignedOut = () => {
+    dispatch({ type: "USER_SIGNED_OUT" });
+  };
+  const isUserSigned = () => {
+    dispatch({ type: "IS_USER_SIGNED" });
+  };
 
   // MODAL INFOS
   const closeModal = () => {
@@ -83,9 +84,9 @@ const AppProvider = ({ children }) => {
         openSidebar,
         closeSidebar,
         //LOGGED USER
-        // isUserLogged,
-        // userLoggedOn,
-        // userLoggedOff,
+        userSignedIn,
+        userSignedOut,
+        isUserSigned,
         //MODAL
         ...state,
         closeModal,
