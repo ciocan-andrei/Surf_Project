@@ -9,7 +9,7 @@ const Navbar = () => {
     <nav className="nav">
       <div className="nav-center">
         <div className="nav-header">
-          <h2 style={{ userSelect: "none" }}>KITE</h2>
+          <h2 style={{ userSelect: "none" }}>SURF</h2>
           <div className="toggle-sidemenu" onClick={openSidebar}>
             <IoMenu className="home-btn" />
           </div>

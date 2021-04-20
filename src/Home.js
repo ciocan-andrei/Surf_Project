@@ -12,14 +12,13 @@ const Home = () => {
 
   useEffect(() => {
     isUserSigned();
-    // console.log("smth");
   }, []);
 
   return (
     <>
       <section className={`front-page ${sideMenuToggle ? "active" : ""}`}>
         <header>
-          <h2 className="logo">Kite</h2>
+          <h2 className="logo">Surf</h2>
           <div className="toggle" onClick={handleToggle}>
             {!sideMenuToggle && <IoMenu className="home-btn" />}
           </div>
@@ -28,7 +27,7 @@ const Home = () => {
         <div className="overlay"></div>
         <div className="text">
           <h2>WELCOME</h2>
-          <h3>to kitesurf</h3>
+          <h3>to the surfing platform</h3>
           <p>Choose from over 100 places!</p>
           <Link to="/dashboard" className="dashboard-item">
             GET STARTED
